@@ -20,5 +20,7 @@ int main(int argc, char** argv){
         msg.linear.x = linear;
         msg.angular.z = Controller.get().axes.horizontal_L_stick;
         PubCmdVel.publish(msg);
+        
+        ros::spinOnce();
     }
 }

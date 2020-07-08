@@ -1,5 +1,5 @@
-#ifndef NELSO_INCLUDE_BIOLOID_JOY_JOY_HPP_
-#define NELSO_INCLUDE_BIOLOID_JOY_JOY_HPP_
+#ifndef JOY_XBOX_INTERFACE_HPP
+#define JOY_XBOX_INTERFACE_HPP
 
 #include <ros/ros.h>
 #include <sensor_msgs/Joy.h>
@@ -10,8 +10,8 @@ namespace bir {
     class JoyController {
     
         public:
-            explicit JoyController(ros::NodeHandle);
-            explicit JoyController(ros::NodeHandle, std::string p_namespace);
+            explicit JoyController(const ros::NodeHandle&);
+            explicit JoyController(const ros::NodeHandle&, const std::string&);
 
             virtual ~JoyController();
         private:
@@ -64,6 +64,7 @@ namespace bir {
                 Buttons button;
                 Axes axes;
             } Joy;
+            
         private:
             Joy _Joy;
             /*  
@@ -90,7 +91,7 @@ namespace bir {
                 Return: Nothing
                 Duty: Set the variable _joyTopicName, Variable whose indicate the topic of JoyController.
             */
-            void setJoyTopicName(std::string);
+            void setJoyTopicName(const std::string&);
             /*  
                 Function: get
                 Type: bir::JoyController::Joy
@@ -98,7 +99,7 @@ namespace bir {
                 Return: _Joy current status
                 Duty: Return Joy Controller current status.
             */
-            Joy get();
+            const Joy& get();
 
     };
 }

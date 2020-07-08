@@ -4,14 +4,14 @@
 #include <geometry_msgs/Twist.h>
 #include "joy.hpp"
 
-bir::JoyController::JoyController(ros::NodeHandle node)
+bir::JoyController::JoyController(const ros::NodeHandle& node)
     :   _Node(node), 
         _namespace("/") 
 {
     this->initJoyController();
 }
 
-bir::JoyController::JoyController(ros::NodeHandle node, std::string p_namespace)
+bir::JoyController::JoyController(const ros::NodeHandle& node, const std::string& p_namespace)
     :   _Node(node), 
         _namespace(p_namespace)
 {
@@ -22,7 +22,7 @@ bir::JoyController::~JoyController(){
 
 }
 
-inline void bir::JoyController::initJoyController(){
+inline void bir::JoyController::initJoyController() {
     _joyTopicName = "joy";
     //? Init Subscriber
     _SubJoy = _Node.subscribe(_namespace + _joyTopicName, 2, &bir::JoyController::subJoyCallback, this);
@@ -31,7 +31,7 @@ inline void bir::JoyController::initJoyController(){
     _Joy.axes = {0};
 }
 
-void bir::JoyController::setJoyTopicName(std::string new_name){
+void bir::JoyController::setJoyTopicName(const std::string& new_name){
     if(!new_name.empty()) _joyTopicName = new_name;
     _SubJoy = _Node.subscribe(_namespace + _joyTopicName, 2, &bir::JoyController::subJoyCallback, this);
 }
@@ -58,6 +58,6 @@ void bir::JoyController::subJoyCallback(const sensor_msgs::JoyConstPtr& msg){
     _Joy.axes.vertical_L_stick = msg->axes[AXES::VERTICAL_L_STICK];
 }
 
-bir::JoyController::Joy bir::JoyController::get(){
+const bir::JoyController::Joy& bir::JoyController::get(){
     return _Joy;
 }
